@@ -6,8 +6,8 @@
   "website": "https://ioscrum",
   "documentation": "https://cms.ioscrum.com/docs",
   "version": "0.1",
-  "description": "A basic cmscrum theme with a self-optimizing landing page, blog, and help desk. Named after the magical artifact from Final Fantasy.",
-  "image": "https://ioscrum.com/images/logo.png",
+  "description": "A basic cmscrum theme with a self-optimizing landing page, blog, and help desk.",
+  "image": "http://ioscrum.com/images/ioScrum_logo_dark_vert.png",
   "dependencies": {
     "modules": {},
     "packages": {}
@@ -294,7 +294,7 @@
       "key": "site.logo",
       "status": "PUBLISHED",
       "type": "text",
-      "value": "https:\/\/s3-us-west-1.amazonaws.com\/psychoanalytics\/logos\/8e1DDbpUN962wxvOaZGDMch3VsIPEQ1B09dsBeAK.png"
+      "value": "http://ioscrum.com/images/ioScrum_logo_dark_vert.png"
     },
     "site.settings_description": {
       "display_name": "Description of this group of settings.",
