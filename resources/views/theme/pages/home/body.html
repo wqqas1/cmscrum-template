@@ -1,0 +1,36 @@
+<body class="index-page sidebar-collapse">
+<div id="cmscrum_nav_container"></div>
+<div class="wrapper">
+    <div class="main">
+        <heading
+                v-for="item in items"
+                v-bind:page="item"
+                v-bind:key="item.id"
+                v-bind:href="item.slug">
+        </heading>
+    </div>
+    <feature1
+            v-for="item in items"
+            v-bind:page="item"
+            v-bind:key="item.id"
+            v-bind:href="item.slug">
+    </feature1>
+    <feature2
+            v-for="item in items"
+            v-bind:page="item"
+            v-bind:key="item.id"
+            v-bind:href="item.slug">
+    </feature2>
+    <feature3
+            v-for="item in items"
+            v-bind:page="item"
+            v-bind:key="item.id"
+            v-bind:href="item.slug">
+    </feature3>
+    <calltoaction
+            v-for="item in items"
+            v-bind:page="item"
+            v-bind:key="item.id"
+            v-bind:href="item.slug">
+    </calltoaction>
+</div>

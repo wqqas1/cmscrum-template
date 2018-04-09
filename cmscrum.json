@@ -1,0 +1,461 @@
+{
+  "name": "ios - a Business Starter Theme",
+  "slug": "ios",
+  "namespace": "ioScrum",
+  "repo_url": "https://wqqas@bitbucket.org/wqqas/cmscrum-template.git",
+  "website": "https://ioscrum",
+  "documentation": "https://cms.ioscrum.com/docs",
+  "version": "0.1",
+  "description": "A basic cmscrum theme with a self-optimizing landing page, blog, and help desk. Named after the magical artifact from Final Fantasy.",
+  "image": "https://ioscrum.com/images/logo.png",
+  "dependencies": {
+    "modules": {},
+    "packages": {}
+  },
+  "config": {
+    "roles": {
+      "locked" : [
+        "admin"
+      ]
+    },
+    "permissions": {
+      "locked": [
+        "view backend",
+        "edit roles"
+      ]
+    }
+  },
+  "tables": {
+    "posts": {
+      "id": {
+        "type": "integer"
+      },
+      "author_id": {
+        "type": "integer",
+        "nullable": true,
+        "auto-increment": true
+      },
+      "category_id": {
+        "type": "integer",
+        "nullable": true
+      },
+      "title": {
+        "type": "text"
+      },
+      "slug": {
+        "type": "text",
+        "nullable": true,
+        "unique": true
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true
+      },
+      "deleted_at": {
+        "type": "timestamp",
+        "nullable": true
+      },
+      "published_at": {
+        "type": "timestamp",
+        "nullable": true
+      },
+      "json": {
+        "type": "json",
+        "nullable": true
+      },
+      "post_type": {
+        "type": "text"
+      },
+      "status": {
+        "type": "enum",
+        "options": ["PUBLISHED", "PENDING", "DRAFT"],
+        "default": "DRAFT"
+      }
+    }
+  },
+  "content_schema_paths": ["templates/*"],
+  "content_schema_filenames": ["schema.json"],
+  "content_types": {
+    "active": {
+      "post": {
+        "slug": "post",
+        "enabled": true
+      },
+      "faq": {
+        "slug": "faq",
+        "enabled": true
+      },
+      "tag": {
+        "slug": "tag",
+        "enabled": true
+      }
+    },
+    "deprecated": {},
+    "inactive": {}
+  },
+  "roles": {
+    "admin": {
+      "name": "admin",
+      "display_name": "Administrator",
+      "permissions": {
+        "browse_users": true,
+        "read_users": true,
+        "edit_users": true,
+        "add_users": true,
+        "delete_users": true,
+        "browse_settings": true,
+        "read_settings": true,
+        "edit_settings": true,
+        "add_settings": true,
+        "delete_settings": true
+      }
+    },
+    "guest": {
+      "name": "guest",
+      "display_name": "Guest (Unauthenticated User)",
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.status",
+              "==",
+              "string:PUBLISHED"
+            ]
+          ]
+        }
+      }
+    },
+    "user": {
+      "name": "user",
+      "display_name": "Regular User",
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.status",
+              "==",
+              "string:PUBLISHED"
+            ]
+          ]
+        }
+      }
+    },
+    "writer": {
+      "name": "writer",
+      "display_name": "Writer",
+      "content_types": [
+        "post"
+      ],
+      "permissions": {
+        "browse_posts": true,
+        "read_posts": true,
+        "edit_posts": true,
+        "delete_posts": true
+      },
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.user_id",
+              "==",
+              "user.id"
+            ],
+            [
+              "post.status",
+              "==",
+              "string:DRAFT"
+            ]
+          ]
+        }
+      }
+    },
+    "editor": {
+      "name": "editor",
+      "display_name": "Editor",
+      "content_types": [
+        "post"
+      ],
+      "permissions": {
+        "browse_posts": true,
+        "read_posts": true,
+        "edit_posts": true,
+        "delete_posts": true,
+        "schedule_posts": true
+      },
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.status",
+              "==",
+              "string:PENDING"
+            ]
+          ]
+        }
+      }
+    },
+    "super_editor": {
+      "name": "super_editor",
+      "display_name": "Super Editor",
+      "content_types": [
+        "post"
+      ],
+      "permissions": {
+        "browse_posts": true,
+        "read_posts": true,
+        "edit_posts": true,
+        "delete_posts": true,
+        "schedule_posts": true,
+        "edit_post_css": true,
+        "edit_post_html": true,
+        "edit_post_scripts": true,
+        "edit_code": true
+      },
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.status",
+              "==",
+              "string:*"
+            ]
+          ]
+        }
+      }
+    },
+    "designer": {
+      "name": "designer",
+      "display_name": "Web Designer",
+      "content_types": [
+        "post"
+      ],
+      "permissions": {
+        "edit_post_css": true
+      },
+      "queries": {
+        "posts": {
+          "where": [
+            [
+              "post.status",
+              "==",
+              "string:PENDING"
+            ]
+          ]
+        }
+      }
+    },
+    "developer": {
+      "name": "developer",
+      "display_name": "Web Developer",
+      "content_types": [
+        "post"
+      ],
+      "permissions": {
+        "edit_post_html": true,
+        "edit_post_scripts": true,
+        "edit_code": true
+      }
+    },
+    "executive": {
+      "name": "executive",
+      "display_name": "Executive",
+      "permissions": {
+        "query_analytics": true
+      }
+    }
+  },
+  "settings": {
+    "site.homepage": {
+      "display_name": "Homepage Slug",
+      "group": "Site",
+      "key": "site.homepage",
+      "status": "PUBLISHED",
+      "type": "text",
+      "value": "home"
+    },
+    "site.menu": {
+      "display_name": "Theme Menu",
+      "group": "Theme",
+      "key": "site.menu",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "site.name": {
+      "display_name": "Site Name",
+      "group": "Site",
+      "key": "site.name",
+      "status": "PUBLISHED",
+      "type": "text",
+      "value": "CMScrum"
+    },
+    "site.logo": {
+      "display_name": "Site Logo",
+      "group": "Site",
+      "key": "site.logo",
+      "status": "PUBLISHED",
+      "type": "text",
+      "value": "https:\/\/s3-us-west-1.amazonaws.com\/psychoanalytics\/logos\/8e1DDbpUN962wxvOaZGDMch3VsIPEQ1B09dsBeAK.png"
+    },
+    "site.settings_description": {
+      "display_name": "Description of this group of settings.",
+      "group": "Site",
+      "key": "site.settings_description",
+      "status": "PRIVATE",
+      "type": "textarea",
+      "value": "Settings for the public-facing website."
+    },
+    "admin.name": {
+      "display_name": "Admin Panel Title",
+      "group": "Admin",
+      "key": "admin.name",
+      "status": "PUBLISHED",
+      "type": "text",
+      "value": "Control Panel"
+    },
+    "admin.settings_description": {
+      "display_name": "Description of this group of settings.",
+      "group": "Admin",
+      "key": "admin.settings_description",
+      "status": "PRIVATE",
+      "type": "textarea",
+      "value": "Settings for the admin panel."
+    },
+    "theme.settings_description": {
+      "display_name": "Description of this group of settings.",
+      "group": "Theme",
+      "key": "theme.settings_description",
+      "status": "PRIVATE",
+      "type": "textarea",
+      "value": "Settings for the currently installed theme."
+    },
+    "theme.footer_headline": {
+      "group": "Theme",
+      "display_name": "Footer Headline",
+      "key": "theme.footer_headline",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "theme.footer_body": {
+      "group": "Theme",
+      "display_name": "Footer Body",
+      "key": "theme.footer_body",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "theme.footer_button": {
+      "group": "Theme",
+      "display_name": "Footer Button",
+      "key": "theme.footer_button",
+      "status": "PUBLISHED",
+      "type": "text"
+    },
+    "theme.footer_link": {
+      "group": "Theme",
+      "display_name": "Footer Link",
+      "key": "theme.footer_link",
+      "status": "PUBLISHED",
+      "type": "text"
+    },
+    "theme.footer_html": {
+      "group": "Theme",
+      "display_name": "Footer HTML",
+      "key": "theme.footer_html",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "theme.global_css": {
+      "group": "Theme",
+      "display_name": "Global CSS",
+      "key": "theme.global_css",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "theme.global_scripts": {
+      "group": "Theme",
+      "display_name": "Global Scripts",
+      "key": "theme.global_scripts",
+      "status": "PUBLISHED",
+      "type": "textarea"
+    },
+    "posts.icon": {
+      "group": "Post",
+      "display_name": "Posts Icon Markup",
+      "key": "post.icon",
+      "status": "PUBLISHED",
+      "type": "textarea",
+      "value": "<i class=\"now-ui-icons files_single-copy-04\"></i>"
+    },
+    "pages.icon": {
+      "group": "Page",
+      "display_name": "Page Icon Markup",
+      "key": "page.icon",
+      "status": "PUBLISHED",
+      "type": "textarea",
+      "value": "<i class=\"now-ui-icons files_paper\"></i>"
+    },
+    "admin.icon": {
+      "group": "Admin",
+      "display_name": "Admin Icon Markup",
+      "key": "admin.icon",
+      "status": "PUBLISHED",
+      "type": "textarea",
+      "value": "<i class=\"now-ui-icons ui-2_settings-90\"></i>"
+    },
+    "site.icon": {
+      "group": "Site",
+      "display_name": "Site Icon Markup",
+      "key": "site.icon",
+      "status": "PUBLISHED",
+      "type": "textarea",
+      "value": "<i class=\"now-ui-icons tech_laptop\"></i>"
+    },
+    "theme.icon": {
+      "group": "Theme",
+      "display_name": "Theme Icon Markup",
+      "key": "theme.icon",
+      "status": "PUBLISHED",
+      "type": "textarea",
+      "value": "<i class=\"now-ui-icons objects_diamond\"></i>"
+    }
+  },
+  "analytics": {
+    "page views by day": {
+      "query": {
+        "select": {
+          "columns": ["created_at"],
+          "clause": "DB::raw('count(*) as total'"
+        },
+        "where": {
+          "property": "event_type",
+          "operand": "=",
+          "value": "page viewed"
+        },
+        "groupBy": {
+          "column": "created_at",
+          "order": "asc",
+          "function": "function($date) {return Carbon::parse($date->created_at)->format('d');});"
+        }
+      },
+      "data": {
+        "slug": {
+          "type": "string",
+          "value": "json.slug"
+        },
+        "date": {
+          "type": "date",
+          "value": "created_at"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "license": "MIT"
+}
